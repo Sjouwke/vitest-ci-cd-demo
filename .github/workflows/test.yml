@@ -1,0 +1,9 @@
+# .github/workflows/test.yml
+on:
+  push:
+    branches: [main]
+jobs:
+  test:
+    steps:
+      - run: npm install
+      - run: npm test

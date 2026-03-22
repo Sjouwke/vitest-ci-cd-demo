@@ -1,0 +1,14 @@
+{
+  "name": "unit-testing-starter",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "test": "vitest"
+  },
+  "devDependencies": {
+    "vite": "^8.0.1",
+    "vitest": "^4.1.0"
+  }
+}
