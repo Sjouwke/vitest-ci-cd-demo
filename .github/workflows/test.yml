@@ -11,7 +11,7 @@
 #       - name: Node.js instellen
 #         uses: actions/setup-node@v4
 #         with:
-#           node-version: "20"
+#           node-version: "22"
 #       - name: Dependencies installeren
 #         run: npm install
 #       - name: Tests uitvoeren
@@ -39,7 +39,7 @@ jobs:
       - name: Node.js instellen
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: "22"
 
       - name: Dependencies installeren
         run: npm install
@@ -61,7 +61,7 @@ jobs:
       - name: Node.js instellen
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: "22"
 
       - name: Dependencies installeren
         run: npm install
