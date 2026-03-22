@@ -1,17 +1,82 @@
+# Default
+# on:
+#   push:
+#     branches: [main]
+# jobs:
+#   test:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Code ophalen & aan virtuele machine koppelen
+#         uses: actions/checkout@v4
+#       - name: Node.js instellen
+#         uses: actions/setup-node@v4
+#         with:
+#           node-version: "20"
+#       - name: Dependencies installeren
+#         run: npm install
+#       - name: Tests uitvoeren
+#         run: npm run test
+
+# Excelleren
+name: Tests en Deploy
+
 on:
   push:
-    branches: [main]
+    branches: [main, develop]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - name: Code ophalen & aan virtuele machine koppelen
+      - name: Code ophalen
         uses: actions/checkout@v4
+
       - name: Node.js instellen
         uses: actions/setup-node@v4
         with:
           node-version: "20"
+
       - name: Dependencies installeren
         run: npm install
+
       - name: Tests uitvoeren
-        run: npm run test
+        run: npm test
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: test
+    if: github.ref == 'refs/heads/main'
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Code ophalen
+        uses: actions/checkout@v4
+
+      - name: Node.js instellen
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Dependencies installeren
+        run: npm install
+
+      - name: Builden
+        run: npm run build
+
+      - name: Pages klaarzetten
+        uses: actions/configure-pages@v4
+
+      - name: Build-folder uploaden
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: "./dist"
+
+      - name: Deployen naar GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
